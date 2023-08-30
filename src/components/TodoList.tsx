@@ -22,19 +22,22 @@ const getData = async () => {
 };
 
 const TodoList = async () => {
-  const data: Todo[] = await getData();
-  console.log(data);
+  const res: { data: Todo[] } = await getData();
+  //   console.log(data);
 
   return (
     <>
-      {data.map((item) => {
-        <div className='bg-gray-100 py-4 px-4 flex items-center gap-x-3 shadow rounded-lg my-5'>
+      {res.data.map((item) => (
+        <div
+          key={item.id}
+          className='bg-gray-100 py-4 px-4 flex items-center gap-x-3 shadow rounded-lg my-5'
+        >
           {/* Circle */}
           <div className='h-3 w-3 bg-secondary rounded-full'></div>
           {/* Task Title */}
           <p className='text-lg font-medium'>{item.task}</p>
-        </div>;
-      })}
+        </div>
+      ))}
     </>
   );
 };
