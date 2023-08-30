@@ -8,8 +8,9 @@ export async function GET(request: NextRequest) {
         await sql`CREATE TABLE IF NOT EXISTS Todos(id serial, Task varchar(255));`
 
         const res = await db.select().from(todoTable);
-
+        console.log(res.find((item:any)=>item.id ===1 ))
         return NextResponse.json({ data: res })
+      
     } catch (err) {
         console.log((err as { message: string }).message)
         return NextResponse.json({ message: "Somthing went wrong" })
@@ -22,11 +23,7 @@ export async function POST(request: NextRequest) {
         if (req.task) {
             const res = await db.insert(todoTable).values({
                 task: req.task,
-            }).returning()
-
-            console.log(res)
-
-
+            }).returning();
             return NextResponse.json({ message: "Data added successfully", data: res })
         } else {
             throw new Error("Task field is required")
